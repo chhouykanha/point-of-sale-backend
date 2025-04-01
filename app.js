@@ -17,8 +17,10 @@ const labelRouter = require('./routes/label.route')
 
 const app = express();
 
+const frontend_url = process.env.ENV === "production" ? process.env.FRONTEND_URL :  'http://localhost:5173'
+
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: frontend_url,
   credentials: true
 }))
 
