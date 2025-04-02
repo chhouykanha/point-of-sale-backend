@@ -1,3 +1,5 @@
+const dotenv = require("dotenv")
+dotenv.config()
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require('cors')
@@ -16,6 +18,12 @@ const reportRouter = require('./routes/report.route')
 const labelRouter = require('./routes/label.route')
 
 const app = express();
+
+console.log([
+  process.env.LOCAL_DOMAIN,
+  `https://${process.env.CLIENT_DOMAIN}`,
+  `https://${process.env.ADMIN_DOMAIN}`,
+])
 
 app.use(cors({
   origin: [
