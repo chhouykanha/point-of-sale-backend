@@ -46,10 +46,11 @@ exports.signin = async (req, res, next) => {
         })
 
         res.cookie('token', token, {
-            httpOnly: true,
+            httpOnly: process.env.COOKIE_HTTPONLY.toLocaleLowerCase() == "true",
             secure: process.env.ENV == "production",
             maxAge: process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
-            sameSite: 'Strict'
+            domain: process.env.ENV == "production" ? process.env.DOMAIN : "",
+            sameSite: process.env.DOMAIN_SAMESITE
         })
 
         res.status(200).json({
@@ -73,9 +74,11 @@ exports.signout = async (req, res, next) => {
         }
 
         res.clearCookie('token',{
-            httpOnly: true,
+            httpOnly: process.env.COOKIE_HTTPONLY.toLocaleLowerCase() == "true",
             secure: process.env.ENV == "production",
-            sameSite: process.env.ENV == "production" ? 'none' : 'strict'
+            maxAge: process.env.COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
+            domain: process.env.ENV == "production" ? process.env.DOMAIN : "",
+            sameSite: process.env.DOMAIN_SAMESITE
         })
 
         res.status(200).json({

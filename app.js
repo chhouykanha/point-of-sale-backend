@@ -17,10 +17,12 @@ const labelRouter = require('./routes/label.route')
 
 const app = express();
 
-const frontend_url = process.env.ENV === "production" ? process.env.FRONTEND_URL :  'http://localhost:5173'
-
 app.use(cors({
-  origin: frontend_url,
+  origin: [
+    process.env.LOCAL_DOMAIN,
+    `https://${process.env.CLIENT_DOMAIN}`,
+    `https://${process.env.ADMIN_DOMAIN}`,
+  ],
   credentials: true
 }))
 
@@ -45,6 +47,7 @@ app.use('/', express.static('public'))
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const errMessage = err.message || "Server Error";
+
 
   res.status(statusCode).json({
     success: false,

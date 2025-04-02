@@ -20,10 +20,6 @@ exports.create = async (req, res, next) => {
 }
 
 
-
-
-
-
 exports.findAll = async (req, res) => {
   try {
     const page = req.query.page * 1 || 1;
@@ -40,6 +36,9 @@ exports.findAll = async (req, res) => {
     const docs = await CategoryModel.find(querySearch)
       .skip(skip)
       .limit(limit)
+
+
+      
       .sort({_id: -1})
       .exec();
 
