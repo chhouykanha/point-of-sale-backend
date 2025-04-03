@@ -29,6 +29,24 @@ app.use(cors({
   credentials: true
 }))
 
+const limiter = rateLimit({
+	windowMs: 15 * 60 * 1000, // 15 minutes
+	limit:1000, // Limit each IP to 100 requests per `window` (here, per 15 minutes).
+    message:{
+        success: false,
+        error: 'Too many requests from this IP, Please try again!'
+    }
+})
+
+app.use(helmet())
+app.use(limiter)
+
+app.use(morgan('combined', {
+  stream: {
+      write: (message) => console.log(message.trim())
+  }
+}))
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -50,7 +68,7 @@ app.use('/', express.static('public'))
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const errMessage = err.message || "Server Error";
-
+  console.log(err.stack)
 
   res.status(statusCode).json({
     success: false,
