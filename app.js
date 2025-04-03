@@ -4,6 +4,10 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require('cors')
 const authGuard = require("./guards/auth.guard");
+const helmet = require("helmet")
+const rateLimit = require("express-rate-limit")
+const morgan = require("morgan")
+const mongoSanitize = require("express-mongo-sanitize")
 
 const authRouter = require("./routes/auth.route");
 const categoryRouter = require("./routes/category.route");
@@ -37,9 +41,12 @@ const limiter = rateLimit({
         error: 'Too many requests from this IP, Please try again!'
     }
 })
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(helmet())
 app.use(limiter)
+app.use(mongoSanitize())
 
 app.use(morgan('combined', {
   stream: {
@@ -47,9 +54,7 @@ app.use(morgan('combined', {
   }
 }))
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
+
 
 app.use("/api/auth", authRouter);
 app.use("/api/category", authGuard, categoryRouter);
