@@ -1,4 +1,4 @@
-require('dotenv').config({path: './config.env'})
+require('dotenv').config()
 
 const UserModel = require("../models/user.model")
 const { connectToDatabase } = require("./db")

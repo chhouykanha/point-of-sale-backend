@@ -19,11 +19,6 @@ const labelRouter = require('./routes/label.route')
 
 const app = express();
 
-console.log([
-  process.env.LOCAL_DOMAIN,
-  `https://${process.env.CLIENT_DOMAIN}`,
-  `https://${process.env.ADMIN_DOMAIN}`,
-])
 
 app.use(cors({
   origin: [

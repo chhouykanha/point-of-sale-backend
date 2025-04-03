@@ -4,7 +4,6 @@ const { connectToDatabase } = require("./database/db");
 
 dotenv.config()
 
-
 const PORT = process.env.PORT || 8001
 
 connectToDatabase()
