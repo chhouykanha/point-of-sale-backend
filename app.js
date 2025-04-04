@@ -80,8 +80,11 @@ app.use('/api/report',authGuard, reportRouter )
 app.use('/api/label', authGuard, labelRouter)
 
 app.use('/', express.static('public', {
-  setHeaders: (res, path) => {
-    res.setHeader('Access-Control-Allow-Origin', '*'); 
+  setHeaders: (res, path, req) => {
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes(origin)) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+    }
   }
 }));
 
