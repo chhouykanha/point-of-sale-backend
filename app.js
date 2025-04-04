@@ -24,14 +24,21 @@ const labelRouter = require('./routes/label.route')
 const app = express();
 
 
+const allowedOrigins = [
+  process.env.LOCAL_DOMAIN,
+  `https://${process.env.CLIENT_DOMAIN}`,
+  `https://${process.env.ADMIN_DOMAIN}`
+];
 app.use(cors({
-  origin: [
-    process.env.LOCAL_DOMAIN,
-    `https://${process.env.CLIENT_DOMAIN}`,
-    `https://${process.env.ADMIN_DOMAIN}`,
-  ],
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
-}))
+}));
 
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes

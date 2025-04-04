@@ -72,7 +72,7 @@ exports.signout = async (req, res, next) => {
         if(!req.user){
             return res.status(401).json({error: 'Unauthorization'})
         }
-
+        
         res.clearCookie('token',{
             httpOnly: process.env.COOKIE_HTTPONLY.toLocaleLowerCase() == "true",
             secure: process.env.ENV == "production",
