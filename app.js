@@ -26,8 +26,8 @@ const app = express();
 
 const allowedOrigins = [
   process.env.LOCAL_DOMAIN,
-  `https://${process.env.CLIENT_DOMAIN}`,
-  `https://${process.env.ADMIN_DOMAIN}`
+  `https://www.${process.env.CLIENT_DOMAIN}`,
+  `https://www.${process.env.ADMIN_DOMAIN}`
 ];
 console.log(allowedOrigins)
 app.use(cors({
