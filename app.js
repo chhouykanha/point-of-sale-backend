@@ -37,7 +37,9 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  exposedHeaders: ['Set-Cookie', 'Authorization']
 }));
 
 const limiter = rateLimit({
