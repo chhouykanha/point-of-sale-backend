@@ -79,7 +79,11 @@ app.use('/api/user', authGuard, userRouter)
 app.use('/api/report',authGuard, reportRouter )
 app.use('/api/label', authGuard, labelRouter)
 
-app.use('/', express.static('public'))
+app.use('/', express.static('public'), {
+  setHeader:  (res, path) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+})
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
