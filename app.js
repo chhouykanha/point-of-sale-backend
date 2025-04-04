@@ -82,6 +82,7 @@ app.use('/api/label', authGuard, labelRouter)
 app.use('/', express.static('public', {
   setHeaders: (res, path, req) => {
     const origin = req.headers.origin;
+    console.log(origin)
     if (allowedOrigins.includes(origin)) {
       res.setHeader('Access-Control-Allow-Origin', origin);
     }
