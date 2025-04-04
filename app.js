@@ -29,6 +29,7 @@ const allowedOrigins = [
   `https://${process.env.CLIENT_DOMAIN}`,
   `https://${process.env.ADMIN_DOMAIN}`
 ];
+console.log(allowedOrigins)
 app.use(cors({
   origin: function (origin, callback) {
     console.log(origin)
